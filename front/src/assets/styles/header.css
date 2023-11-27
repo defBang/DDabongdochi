@@ -1,0 +1,84 @@
+#topmenu {
+  /*background-color: #86b300;
+  background-color: #abaaeb;
+  background-color: #aad3eb;*/
+  background-color: #86b300;
+  display: flex;
+  justify-content: center;
+}
+.menu {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+  background-clip: padding-box;
+}
+#topmenu .menu {
+  padding: 5px 20px;
+  justify-content: space-between;
+  align-items: center;
+}
+#logo {
+  padding: 0px 20px;
+  display: flex;
+  justify-content: left;
+}
+#logo img {
+  object-fit: contain;
+  width: 80px;
+}
+#member {
+  display: flex;
+  justify-content: right;
+}
+#nav {
+  padding: 0px;
+
+  display: flex;
+  justify-content: center;
+}
+
+#nav a {
+  /*color: #53588a;*/
+  font-weight: bold;
+  color: #ffffff;
+}
+
+#nav a.router-link-exact-active {
+  color: #ffffff;
+}
+#nav .menu {
+  height: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  display: flex;
+}
+#nav .menu .board {
+  margin: auto;
+}
+.modal-header {
+  border-bottom: 0 none;
+}
+
+.modal-footer {
+  border-top: 0 none;
+}
+
+#loginoption {
+  margin: 0px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#loginoption .loginb {
+  padding-left: 0px;
+}
+#loginoption .otherb {
+  padding-right: 0px;
+}
+#searchOption {
+  max-width: 100px;
+}
+#searchWord {
+  width: 220px;
+}

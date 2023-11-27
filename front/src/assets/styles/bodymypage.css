@@ -1,0 +1,136 @@
+.pagebody {
+  padding: 20px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(255, 255, 255);
+}
+.pagename {
+  text-align: left;
+  font-size: 2rem;
+  color: #263785;
+  padding-bottom: 20px;
+}
+.mypage_userinfo {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+  margin-bottom: 20px;
+  padding: 20px;
+  padding-top: 0px;
+}
+.mypage_info_row {
+  padding-bottom: 5px;
+}
+.mypage_info_keyvalue {
+  width: 10rem;
+  text-align: left;
+}
+.mypage_info_value {
+  text-align: left;
+}
+.change_pw_btn_div {
+  padding: 20px 10px;
+}
+.change_pw_btn {
+  display: flex;
+  justify-content: left;
+}
+.signout_btn_div {
+  padding: 20px 0px;
+}
+.signout_btn {
+  display: flex;
+  justify-content: left;
+}
+.mypage_info_img {
+  display: flex;
+  justify-content: center;
+}
+.mypage_img_div {
+  display: flex;
+  justify-content: left;
+}
+.mypage_img {
+  width: 400px;
+  border-radius: 5%;
+}
+.change_password_verify {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+.change_password {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+.change_password_form {
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+.change_password_form .text {
+  margin: auto;
+  min-width: 8rem;
+  text-align: left;
+}
+.mypage_outertabs {
+  width: 9rem;
+}
+.nav-tabs {
+  border-bottom: 0px hidden rgb(0, 0, 0);
+}
+.mypage_innertabs .nav-tabs {
+  border-bottom: var(--bs-nav-tabs-border-width) solid
+    var(--bs-nav-tabs-border-color);
+}
+.tab-content {
+  width: 100%;
+}
+.mypage_postDetail {
+  margin-left: auto;
+  margin-right: auto;
+}
+.mypage_postInfo {
+  border-width: 0px 0px 4px 0px;
+  border-style: solid;
+  border-color: rgb(64, 65, 116);
+  max-width: 100%;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.col-sm-auto.mypage_postNoInfo {
+  width: 6rem;
+}
+.mypage_postTitleInfo {
+  text-align: left;
+  min-width: 20rem;
+}
+.col-sm-auto.mypage_postLecturerInfo {
+  width: 6rem;
+}
+.col-sm-auto.mypage_postPlatformInfo {
+  width: 10rem;
+}
+.col-sm-auto.mypage_postTagInfo {
+  width: 10rem;
+}
+.col-sm-auto.mypage_postWriterInfo {
+  width: 10rem;
+}
+.col-sm-auto.mypage_postDateInfo {
+  width: 6rem;
+}
+.col-sm-auto.mypage_postRateInfo {
+  width: 6rem;
+}
+#postlist0 {
+  background-color: rgb(255, 255, 255);
+}
+#postlist1 {
+  background-color: rgb(222, 239, 248);
+}
+.mypage_pagebar {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}

@@ -1,0 +1,89 @@
+.pagebody {
+  padding: 20px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(255, 255, 255);
+}
+.write_title_form {
+  padding: 0px 0px 20px 0px;
+  box-sizing: 2rem;
+}
+.write_title_text {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.write_tags {
+  display: flex;
+}
+#write_tag {
+  margin-top: 0.875rem;
+}
+.write_help {
+  display: flex;
+  justify-content: right;
+}
+.write_help_btn_col {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+#write_help_btn {
+  font-size: 1rem;
+}
+.write_help_text {
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  margin: auto 0;
+  padding-top: auto;
+  padding-bottom: auto;
+}
+.write_tag_form {
+  padding: 20px 0px;
+}
+.help_alert {
+  display: flex;
+  margin: 0;
+  max-height: 2rem;
+  padding: 0.25rem;
+}
+.write_tag_l_h {
+  padding-bottom: 20px;
+}
+.write_ai_answer {
+  padding-left: 20px;
+  text-align: left;
+}
+.write_ai_answer_col {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+#check_form {
+  border: var(--bs-border-width) solid #414141;
+}
+.col-sm-auto.write_tag_label {
+  text-align: center;
+  margin: auto 0;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.write_channel_form {
+  padding-bottom: 20px;
+}
+.write_channel_label {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 15rem;
+  text-align: left;
+}
+.write_lecture_form {
+  padding-bottom: 20px;
+}
+.write_lecture_label {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 15rem;
+  text-align: left;
+}

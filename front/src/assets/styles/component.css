@@ -1,0 +1,200 @@
+#markdowneditor {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 1400px;
+}
+#mdeditor {
+  text-align: left;
+}
+.postRow {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+  max-width: 1400px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.postNo {
+  width: 6rem;
+  color: rgb(122, 122, 122);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postTitle {
+  text-align: left;
+  min-width: 20rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.best {
+  color: rgb(238, 187, 47);
+}
+.postTitle a {
+  color: rgb(139, 139, 139);
+}
+.postLecturer {
+  width: 6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postPlatform {
+  width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postTag {
+  width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postWriter {
+  width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postLecturer a {
+  color: rgb(139, 139, 139);
+}
+.postWriter a {
+  color: rgb(139, 139, 139);
+}
+.postTag a {
+  color: rgb(139, 139, 139);
+}
+.postDate {
+  width: 6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.postRate {
+  width: 6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.answer_buttonarea {
+  margin-top: auto;
+  margin-bottom: auto;
+  padding: 10px;
+}
+.answerinfo {
+  display: flex;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+}
+.answerinfo .row {
+  width: 100%;
+}
+.answerwriter {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: left;
+  padding-left: 2rem;
+  font-weight: bold;
+}
+.answerdate {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: right;
+}
+.answerrate {
+  float: right;
+}
+.answerratebutton {
+  text-align: center;
+  min-width: 5rem;
+}
+.rateup {
+  color: red;
+}
+.ratedown {
+  color: blue;
+}
+.answercontent {
+  text-align: left;
+  padding: 20px 20px;
+}
+.ansbtngrp_e_d {
+  display: flex;
+  justify-content: right;
+  text-align: center;
+
+  padding: 0 20px;
+}
+.comment_write {
+  padding-bottom: 5px;
+}
+.comment_buttonarea {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.comment_writebutton {
+  height: 5rem;
+}
+.comment_info {
+  display: flex;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+}
+.comment_info .row {
+  width: 100%;
+}
+.comment_writer {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: left;
+  padding-left: 2rem;
+  font-weight: bold;
+}
+.comment_date {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: right;
+}
+.comment_content {
+  text-align: left;
+  padding: 20px 20px;
+}
+.err_component {
+  display: flex;
+  justify-content: center;
+}
+.err_window {
+  padding-top: 10%;
+  max-height: 50%;
+  width: 500px !important;
+}
+.err_info {
+  padding: 0px 10px 20px 10px;
+}
+.err_status {
+  font-size: 4rem;
+  font-weight: 600;
+}
+.back_btn {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.errorimg img {
+  object-fit: contain;
+  height: 450px;
+}

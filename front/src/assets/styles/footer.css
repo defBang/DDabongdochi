@@ -1,0 +1,13 @@
+#footerbar {
+  margin-bottom: 0rem;
+  margin-top: 0rem;
+}
+.footercontent {
+  background-color: #dcdcdc;
+}
+.footercontent .menu {
+  max-width: 1400px;
+}
+.footercontent .menu a {
+  color: #000000;
+}

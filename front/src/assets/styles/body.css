@@ -1,0 +1,135 @@
+.pagebody {
+  padding: 20px;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgb(255, 255, 255);
+}
+.home_img img {
+  width: 700px;
+}
+.postboard {
+  text-align: left;
+  font-size: 2rem;
+  /*color: rgb(31, 129, 75);*/
+  color: #263785;
+  padding-bottom: 20px;
+  padding-left: 20px;
+}
+.modeButton {
+  display: flex;
+  justify-content: left;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+.postDetail {
+  margin-left: auto;
+  margin-right: auto;
+}
+.postInfo {
+  border-width: 0px 0px 4px 0px;
+  border-style: solid;
+  border-color: rgb(64, 65, 116);
+  max-width: 1400px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.col-sm-auto.postNoInfo {
+  width: 6rem;
+}
+.postTitleInfo {
+  text-align: left;
+  min-width: 20rem;
+}
+.col-sm-auto.postLecturerInfo {
+  width: 6rem;
+}
+.col-sm-auto.postPlatformInfo {
+  width: 10rem;
+}
+.col-sm-auto.postTagInfo {
+  width: 10rem;
+}
+.col-sm-auto.postWriterInfo {
+  width: 10rem;
+}
+.col-sm-auto.postDateInfo {
+  width: 6rem;
+}
+.col-sm-auto.postRateInfo {
+  width: 6rem;
+}
+#postlist0 {
+  background-color: rgb(255, 255, 255);
+}
+#postlist1 {
+  background-color: rgb(222, 239, 248);
+}
+.pagebar {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+.searchbar {
+  display: flex;
+  margin-left: auto;
+  justify-content: right;
+  padding-right: 20px;
+}
+.SignUp {
+  max-width: 1400px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+.signupform {
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+.signupform .text {
+  margin: auto;
+  min-width: 8rem;
+  text-align: left;
+}
+.find {
+  max-width: 1400px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+.findform {
+  max-width: 800px;
+  margin-bottom: 20px;
+}
+.findform .text {
+  margin: auto;
+  min-width: 100px;
+  text-align: left;
+}
+.err_window {
+  padding-top: 10%;
+  max-height: 50%;
+  width: 500px !important;
+}
+.err_info {
+  padding: 0px 10px 20px 10px;
+}
+.err_status {
+  font-size: 4rem;
+  font-weight: 600;
+}
+.back_btn {
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+.err_page {
+  display: flex;
+  justify-content: center;
+}
+.errorimg img {
+  object-fit: contain;
+  height: 450px;
+}
+.about {
+  padding: 20px;
+}

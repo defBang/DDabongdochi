@@ -1,0 +1,163 @@
+.mypage_postRow {
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+  max-width: 1400px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.mypage_postNo {
+  width: 6rem;
+  color: rgb(122, 122, 122);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_postTitle {
+  text-align: left;
+  min-width: 20rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_best {
+  color: rgb(238, 187, 47);
+}
+.mypage_postTitle a {
+  color: rgb(139, 139, 139);
+}
+.mypage_postLecturer {
+  width: 6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_postPlatform {
+  width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_postTag {
+  width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_postWriter {
+  width: 10rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_postLecturer a {
+  color: rgb(139, 139, 139);
+}
+.mypage_postWriter a {
+  color: rgb(139, 139, 139);
+}
+.mypage_postTag a {
+  color: rgb(139, 139, 139);
+}
+.mypage_postDate {
+  width: 6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_postRate {
+  width: 6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mypage_answer {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  border-width: 2px 1px 1px 1px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+}
+.mypage_answerinfo {
+  display: flex;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+}
+.mypage_answerinfo .row {
+  width: 100%;
+}
+.mypage_answerwriter {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: left;
+  padding-left: 2rem;
+  font-weight: bold;
+}
+.mypage_answerdate {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: right;
+}
+.mypage_answerrate {
+  float: right;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+.mypage_rate {
+  color: red;
+}
+.mypage_answercontent {
+  text-align: left;
+  padding: 20px 20px;
+}
+.mypage_comment {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  border-width: 2px 1px 1px 1px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+}
+.mypage_comment_info {
+  display: flex;
+  width: 100%;
+  padding: 10px 0px 10px 0px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: rgb(192, 192, 192);
+}
+.mypage_comment_info .row {
+  width: 100%;
+}
+.mypage_comment_writer {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: left;
+  padding-left: 2rem;
+  font-weight: bold;
+}
+.mypage_comment_board {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: left;
+}
+.mypage_comment_date {
+  margin-top: auto;
+  margin-bottom: auto;
+  min-width: 150px;
+  text-align: right;
+}
+.mypage_comment_content {
+  margin-top: auto;
+  margin-bottom: auto;
+  text-align: left;
+  padding: 20px 20px;
+}
