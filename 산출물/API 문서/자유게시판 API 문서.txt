@@ -1,0 +1,313 @@
+자유 게시판 API 문서 
+
+공통 에러 처리
+
+로그인 필요
+- 로그인 상태가 아닐 때
+alert 메시지 표시 후 로그인 페이지로 이동
+[ 403 ] { "message":"로그인이 필요합니다." }
+
+비로그인 필요
+- 로그인 상태일 때
+[ 403 ] { "message":"로그인 상태입니다." }
+
+서버 오류
+서버 내부 오류는 클라이언트에 그 내용을 노출시키지 않는다.
+500, 서버 오류!만 표시함
+오류 코드와 메시지 출력
+[ 500 ] { "message":"서버 오류!" }
+
+
+
+###### 자유 게시판 /api/freeboard ######
+
+1) 자유게시판 게시글/추천글 목록
+    [ GET ] /api/freeboard
+
+요청:
+    쿼리 스트링:
+        - 추천글 목록
+        /?mode=best
+
+        - 페이지
+        /?p=${ page }
+
+        예시)
+            /api/freeboard/?mode=best&p=2
+            /api/freeboard/?p=6
+
+응답:
+    요청 성공
+    [ 200 ]
+    [
+        {
+            "startPage": 첫 페이지 번호,
+            "endPage": 끝 페이지 번호,
+            "isPrev": 이전 화살표 유무,
+            "isNext": 다음 화살표 유무,
+            "totalPages": 총 페이지 개수
+        },
+        [   
+            {
+                "no": 행 번호,
+                "free_post_id": 게시글 ID,
+                "free_main_tag": "메인 태그",
+                "free_title": "제목",
+                "comment_count": 댓글 개수,
+                "free_writer_nickname": "작성자 닉네임",
+                "date": "날짜", // 주석 작성일 현재시간 기준으로 24시간 이내 HH:mm, 이후 MM-DD
+                "rate": 추천수 합
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        {
+            "startPage": 1,
+            "endPage": 2,
+            "isPrev": false,
+            "isNext": false,
+            "totalPages": 2
+        },
+        [
+            {
+                "no": 23,
+                "free_post_id": 24,
+                "free_main_tag": "메인태그",
+                "free_title": "자유게시판 글쓰기",
+                "comment_count": 0,
+                "free_writer_nickname": "어드민 권한 없음",
+                "date": "05:14",
+                "rate": 0
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+2) 자유게시판 게시글 검색 결과 목록
+    [ GET ] /api/freeboard/search
+
+요청:
+    쿼리 스트링:
+        - 검색할 항목 & 검색어
+        target: writer, title, tag
+        /?${ target }=${ value }
+
+        - 페이지
+        /?p=${ page }
+
+        예시)
+            /api/freeboard/search/?writer=닉네임123&p=4
+            /api/freeboard/search/?title=게시판+사용법
+
+응답: 자유게시판 게시글/추천글 목록과 같다.
+
+3) 자유게시판 게시글 작성
+    [ POST ] /api/freeboard/write
+    로그인 필요
+
+요청:
+    {
+        "title": "질문 제목",
+        "content": "질문 내용",
+        "mainTag": "메인 태그",
+        "tags": [ "메인 태그", "태그1", "태그2", ... ]
+    }
+
+응답:
+    작성 성공
+    [ 200 ] { "freeBoardPostId": 자유게시판 게시글 ID }
+
+4) 자유게시판 게시글 페이지
+    [ GET ] /api/freeboard/:id
+
+응답:
+    존재하지 않는 게시글일 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    요청 성공
+    [ 200 ]
+    [
+        {
+            "free_post_id": 게시글 ID,
+            "free_writer": 작성자 ID,
+            "free_writer_nickname": "작성자 닉네임",
+            "free_title": "제목",
+            "free_content": "내용",
+            "free_main_tag": "메인 태그",
+            "comment_count": 댓글 개수,
+            "rate_up": 추천 수,
+            "rate_down": 비추천 수,
+            "date": "작성일", // YYYY-MM-DD HH:mm:ss
+            "recent_update_date": "수정일" // 주석: null일 경우 수정일을 표시하지 않는다. YYYY-MM-DD HH:mm:ss
+        },
+        [
+            {"tag_name":"메인 태그"},
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"}, ... 
+        ],
+        [
+             {
+                "comment_id": 댓글 ID,
+                "lecture_post_id": 강의 게시글 ID, 
+                "channel_post_id": 채널 게시글 ID,
+                "free_post_id": 자유게시판 게시글 ID,
+                "comment_writer": 작성자 ID,
+                "comment_writer_nickname": "작성자 닉네임",
+                "comment_content": "댓글 내용",
+                "date": "작성일", // 주석 작성일 YYYY-MM-DD HH:mm:ss
+                "recent_update_date": 수정일 // 주석: null일 경우 수정일을 표시하지 않는다. YYYY-MM-DD HH:mm:ss
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        {
+            "free_post_id": 1,
+            "free_writer": 6,
+            "free_writer_nickname": "어드민 권한 없음",
+            "free_title": "자유게시판 수정 테스트",
+            "free_content": "수정 내용",
+            "free_main_tag": "메인태그2",
+            "comment_count": 15,
+            "rate_up": 1,
+            "rate_down": 0,
+            "date": "2023-11-16 01:38:50",
+            "recent_update_date": "2023-11-16 05:12:18"
+        },
+        [
+            {
+                "tag_name": "메인태그2"
+            },
+            {
+                "tag_name": "테스트 태그1"
+            },
+            {
+                "tag_name": "테스트 태그2"
+            },
+            {
+                "tag_name": "테스트 태그3"
+            }
+        ],
+        [
+            {
+                "comment_id": 254,
+                "lecture_post_id": null,
+                "channel_post_id": null,
+                "free_post_id": 1,
+                "comment_writer": 6,
+                "comment_writer_nickname": "어드민 권한 없음",
+                "comment_content": "테스트 댓글",
+                "date": "2023-11-16 06:07:08",
+                "recent_update_date": null
+            },
+            {
+                "comment_id": 255,
+                "lecture_post_id": null,
+                "channel_post_id": null,
+                "free_post_id": 1,
+                "comment_writer": 6,
+                "comment_writer_nickname": "어드민 권한 없음",
+                "comment_content": "테스트 댓글",
+                "date": "2023-11-16 06:07:09",
+                "recent_update_date": null
+            },
+        ]
+    ]
+
+5) 자유게시판 게시글 수정 페이지 데이터 요청
+    [ GET ] /api/freeboard/:id/edit
+    로그인 필요
+
+응답:
+    수정하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    해당 게시글의 작성자가 수정하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    요청 성공
+    [ 200 ]
+    [
+        {
+            "free_writer": 작성자 ID,
+            "free_title": "제목",
+            "free_content": "내용",
+            "free_main_tag": "메인 태그"
+        },
+        [
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"},
+            {"tag_name":"태그4"}, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        {
+            "free_writer": 6,
+            "free_title": "자유게시판 수정 테스트",
+            "free_content": "수정 내용",
+            "free_main_tag": "메인태그2"
+        },
+        [
+            {
+                "tag_name": "메인태그2"
+            },
+            {
+                "tag_name": "테스트 태그1"
+            },
+            {
+                "tag_name": "테스트 태그2"
+            },
+            {
+                "tag_name": "테스트 태그3"
+            }
+        ]
+    ]
+
+6) 자유게시판 게시글 수정
+    [ PUT ] /api/freeboard/:id/edit
+    로그인 필요
+
+요청:  
+    {
+        "title":"수정한 제목"
+        "content":"수정한 내용"
+        "mainTag":"메인 태그"
+        "tags": [ "메인 태그", "태그1", "태그2", ... ]
+    }
+
+응답:
+    수정하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    해당 게시글의 작성자가 수정하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    수정 성공
+    [ 200 ]
+
+7) 자유게시판 게시글 삭제
+    [ DELETE] /api/freeboard/:id/delete
+    로그인 필요
+
+응답:
+    삭제하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    해당 게시글의 작성자가 삭제하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    삭제 성공
+    [ 200 ]

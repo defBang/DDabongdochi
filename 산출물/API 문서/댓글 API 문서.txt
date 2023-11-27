@@ -1,0 +1,106 @@
+댓글 API 문서
+
+공통 에러 처리
+
+로그인 필요
+- 로그인 상태가 아닐 때
+alert 메시지 표시 후 로그인 페이지로 이동
+[ 403 ] { "message":"로그인이 필요합니다." }
+
+비로그인 필요
+- 로그인 상태일 때
+[ 403 ] { "message":"로그인 상태입니다." }
+
+서버 오류
+서버 내부 오류는 클라이언트에 그 내용을 노출시키지 않는다.
+500, 서버 오류!만 표시함
+오류 코드와 메시지 출력
+[ 500 ] { "message":"서버 오류!" }
+
+
+###### 댓글 /api/comment ######
+
+1) 게시글 댓글 작성
+    [ POST ] /api/comment/:postId
+    로그인 필요
+
+요청:
+    쿼리 스트링:
+        -게시판
+        boards: lecture, channel, freeboard
+        /?board=${ boards }
+
+        예시)
+            /comment/?board=lecture
+            /comment/?board=channel
+
+    {
+        "content": "댓글 내용"
+    }
+
+응답:
+    댓글이 입력되지 않았을 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message":"댓글이 입력되지 않았습니다." }
+
+    쿼리 스트링 board가 없을 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message": "게시판이 없습니다." }
+
+    쿼리 스트링 board에 lecture, channel, freeboard 이외에 문자가 들어왔을 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message": "존재하지 않는 게시판입니다." }
+
+    댓글 작성 성공
+    [ 200 ]
+
+2) 게시글 댓글 수정
+    [ PUT ] /api/comment/:postId/:commentId
+    로그인 필요
+
+요청:
+    {
+        "content": "댓글 내용"
+    }
+
+응답:
+    댓글이 입력되지 않았을 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message":"댓글이 입력되지 않았습니다." }
+
+    다른 유저의 답변을 수정 하려하면
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    댓글 작성 성공
+    [ 200 ]
+
+3) 게시글 댓글 삭제
+    [ DELETE ] /api/comment/:postId/:commentId
+    로그인 필요
+
+요청:
+    쿼리 스트링:
+        -게시판
+        boards: lecture, channel, freeboard
+        /?board=${ boards }
+
+        예시)
+            /comment/1/23/?board=lecture
+            /comment/3/56/?board=channel
+
+응답:
+    쿼리 스트링 board가 없을 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message": "게시판이 없습니다." }
+
+    쿼리 스트링 board에 lecture, channel, freeboard 이외에 문자가 들어왔을 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message": "존재하지 않는 게시판입니다." }
+
+    다른 유저의 답변을 삭제 하려하면
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    댓글 삭제 성공
+    [ 200 ]

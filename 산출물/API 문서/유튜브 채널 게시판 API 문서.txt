@@ -1,0 +1,328 @@
+유튜브 채널 게시판 API 문서
+
+공통 에러 처리
+
+로그인 필요
+- 로그인 상태가 아닐 때
+alert 메시지 표시 후 로그인 페이지로 이동
+[ 403 ] { "message":"로그인이 필요합니다." }
+
+비로그인 필요
+- 로그인 상태일 때
+[ 403 ] { "message":"로그인 상태입니다." }
+
+서버 오류
+서버 내부 오류는 클라이언트에 그 내용을 노출시키지 않는다.
+500, 서버 오류!만 표시함
+오류 코드와 메시지 출력
+[ 500 ] { "message":"서버 오류!" }
+
+
+###### 유튜브 채널 게시판 /api/channel ######
+
+1) 채널 게시글/추천글 목록
+    [ GET ] /api/channel
+
+요청:
+    쿼리 스트링:
+        - 추천글 목록
+        /?mode=best
+
+        - 페이지
+        /?p=${ page }
+
+        예시)
+            /api/channel/?mode=best&p=2
+            /api/channel/?p=6
+
+응답:
+    요청 성공
+    [ 200 ]
+    [
+        {
+            "startPage": 첫 페이지 번호,
+            "endPage": 끝 페이지 번호,
+            "isPrev": 이전 화살표 유무,
+            "isNext": 다음 화살표 유무,
+            "totalPages": 총 페이지 개수,
+        },
+        [
+            {
+                "no": 행 번호,
+                "channel_post_id": 채널 게시글 ID,
+                "channel_main_tag": "메인 태그",
+                "channel_name": "채널 이름",
+                "comment_count": 댓글 개수,
+                "date": "작성일", // 주석 작성일 현재시간 기준으로 24시간 이내 HH:mm, 이후 MM-DD
+                "rate": 추천수 합
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        {
+        "startPage": 1,
+        "endPage": 3,
+        "isPrev": false,
+        "isNext": false,
+        "totalPages": 3
+        },
+        [
+            {
+            "no": 2,
+            "channel_post_id": 2,
+            "channel_main_tag": "c언어 입문",
+            "channel_name": "나도코딩",
+            "comment_count": 1,
+            "date": "10-10",
+            "rate": 1
+            },  { ... }, { ... }, ...
+        ]
+    ]
+
+2) 채널 게시글 검색 결과 목록
+    [ GET ] /api/channel/search
+
+요청:
+    쿼리 스트링:
+        - 검색할 항목 & 검색어
+        target: title, tag
+        /?${ target }=${ value }
+
+        - 페이지
+        /?p=${ page }
+
+        예시)
+            /api/channel/search/?title=Java+입문&p=4
+            /api/channel/search/?tag=Java
+
+응답: 채널 게시글/추천글 목록과 같다.
+
+3) 채널 게시글 작성
+    [ POST ] /api/channel/write
+    로그인 필요
+
+요청:★
+    {
+        "videoLink": "채널 영상 링크"
+        "mainTag": "메인 태그"
+        "tags": [ "메인 태그", "태그1", "태그2", ... ]
+    }
+
+응답:
+    ★잘못된 영상 링크일 때
+    [ 400 ] { "message": "잘못된 유튜브 url입니다." }
+    작성 성공
+    [ 200 ] {"channel_post_id": 채널 게시글 ID}
+
+4) 채널 게시글 페이지   
+    [ GET ] /api/channel/:id
+
+응답:
+    존재하지 않는 게시글일 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    요청 성공★
+    [ 200 ]
+    [
+        {
+            "isAdmin": 관리자 여부(0: 일반유저, 1: 관리자)
+        },
+        [
+            {
+                "channel_post_id": 채널 게시글 ID,
+                "channel_name": "채널 이름",
+                "channel_link": "채널 주소",
+                "channel_profile_img_link": "채널 프로필 이미지 주소",
+                "channel_main_video_link": "채널 영상 링크",
+                "channel_main_tag": "메인 태그",
+                "comment_count": 댓글 개수,
+                "rate_up": 추천 수,
+                "rate_down": 비추천 수,
+                "date": "작성일", // 주석 작성일 YYYY-MM-DD HH:mm:ss
+                "recent_update_date": 수정일 // 주석: null일 경우 수정일을 표시하지 않는다. YYYY-MM-DD HH:mm:ss
+                "channel_profile_img_link": "프로필 이미지 링크 240*240",
+                "channel_id": "채널 ID",
+                "description": "설명", // 설명을 적지 않은 유튜버도 있기 때문에 공백""인 경우 게시글 페이지에 표시하지 않는다.
+                "subscriber_count": "구독자수",
+                "video_count": "비디오 개수",
+                "view_count": "총 조회수",
+                "country": "국가 ex) KR",
+                "published_at": "가입일"
+            },
+        ],
+        [
+            {"tag_name":"메인 태그"},
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"}, ...
+        ],
+        [
+            {
+            "comment_id": 댓글 ID,
+            "lecture_post_id": 강의 게시글 ID, 
+            "channel_post_id": 채널 게시글 ID,
+            "free_post_id": 자유게시판 게시글 ID,
+            "comment_writer": 작성자 ID,
+            "comment_writer_nickname": "작성자 닉네임",
+            "comment_content": "댓글 내용",
+            "date": "작성일", // YYYY-MM-DD HH:mm:ss
+            "recent_update_date": 수정일 // 주석: null일 경우 수정일을 표시하지 않는다. YYYY-MM-DD HH:mm:ss
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+예시 응답:★
+    [
+        {
+            "isAdmin": 1
+        },
+        [
+            {
+                "channel_post_id": 3,
+                "channel_name": "코딩애플",
+                "channel_link": "https://www.youtube.com/@codingapple",
+                "channel_main_video_link": "https://www.youtube.com/watch?v=upSLS6MCtcU",
+                "channel_main_tag": "웹개발",
+                "comment_count": 0,
+                "rate_up": 0,
+                "rate_down": 0,
+                "date": "2023-11-26 02:24:16",
+                "recent_update_date": null,
+                "channel_profile_img_link": "https://yt3.ggpht.com/ytc/APkrFKbanyE9ajb3NFw2rtsLIshaBRFcgTNX08Y4jmxbqw=s240-c-k-c0x00ffffff-no-rj",
+                "channel_id": "UCSLrpBAzr-ROVGHQ5EmxnUg",
+                "description": "",
+                "subscriber_count": 213000,
+                "video_count": 179,
+                "view_count": 20136750,
+                "country": "KR",
+                "published_at": "2018-11-29"
+            },
+        ],
+        [
+            {
+                "tag_name": "백엔드"
+            },
+            {
+                "tag_name": "웹개발"
+            }
+        ],
+        [
+            {
+                "comment_id": 106,
+                "lecture_post_id": null,
+                "channel_post_id": 2,
+                "free_post_id": null,
+                "comment_writer": 1,
+                "comment_writer_nickname": "닉네임",
+                "comment_content": "다른 유튜브 채널 댓글1",
+                "date": "2023-10-10 17:33:52",
+                "recent_update_date": null
+            },
+            {
+                "comment_id": 107,
+                "lecture_post_id": null,
+                "channel_post_id": 2,
+                "free_post_id": null,
+                "comment_writer": 2,
+                "comment_writer_nickname": "쿼리",
+                "comment_content": "다른 유튜브 채널 댓글1",
+                "date": "2023-10-10 17:33:53",
+                "recent_update_date": null
+            }
+        ]
+    ]
+
+5) 채널 게시글 수정 페이지 데이터 요청
+    [ GET ] /api/channel/:id/edit
+    로그인 필요
+
+응답:
+    수정하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    ★요청 성공
+    [ 200 ]
+    [
+        [
+            {
+                "channel_name": "채널 이름",
+                "channel_main_video_link": "채널 영상 링크",
+                "channel_main_tag": "메인 태그"
+            }
+        ],
+        [
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"},
+            {"tag_name":"태그4"}, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        [
+            {
+                "channel_name": "코딩애플",
+                "channel_main_video_link": "https://www.youtube.com/watch?v=upSLS6MCtcU",
+                "channel_main_tag": "웹개발"
+            }
+        ],
+        [
+            {
+            "tag_name": "백엔드"
+            },
+            {
+                "tag_name": "웹개발"
+            },
+            {
+                "tag_name": "프론트엔드"
+            }
+        ]
+    ]
+
+6) 채널 게시글 수정
+    [ PUT ] /api/channel/:id/edit
+    로그인 필요
+
+요청:★
+    {
+        "videoLink": "채널 영상 링크"
+        "mainTag": "메인 태그"
+        "tags": [ "메인 태그", "태그1", "태그2", ... ]
+    }
+
+응답:
+    ★잘못된 영상 링크일 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message": "잘못된 유튜브 url입니다." }
+
+    수정하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    ★수정하려는 영상 링크의 채널이 DB에 저장된 채널과 다를 때
+    오류 코드와 메시지 출력
+    [ 400 ] { "message": "해당 유튜브 채널의 동영상이 아닙니다." }
+
+    수정 성공
+    [ 200 ]
+
+7) 채널 게시글 삭제
+    [ DELETE ] /api/channel/:id/delete
+    로그인 필요
+
+응답:
+    삭제하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    해당 게시글을 삭제하려는 유저가 관리자가 아닐 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    삭제 성공
+    [ 200 ]

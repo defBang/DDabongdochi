@@ -1,0 +1,343 @@
+질문 게시판 API문서 - 방어진 작성
+
+공통 에러 처리
+
+로그인 필요
+- 로그인 상태가 아닐 때
+alert 메시지 표시 후 로그인 페이지로 이동
+[ 403 ] { "message":"로그인이 필요합니다." }
+
+비로그인 필요
+- 로그인 상태일 때
+[ 403 ] { "message":"로그인 상태입니다." }
+
+서버 오류
+서버 내부 오류는 클라이언트에 그 내용을 노출시키지 않는다.
+500, 서버 오류!만 표시함
+오류 코드와 메시지 출력
+[ 500 ] { "message":"서버 오류!" }
+
+
+
+###### 질문 게시판 /api/devQnA ######
+
+1) 질문 게시글/추천글 목록
+    [ GET ] /api/devQnA
+
+요청:
+    쿼리 스트링:
+        - 추천글 목록
+        /?mode=best
+
+        - 페이지
+        /?p=${ page }
+
+        예시)
+            /api/devQnA/?mode=best&p=2
+            /api/devQnA/?p=6
+
+응답:
+    요청 성공
+    [ 200 ]
+    [
+        {
+            "startPage": 첫 페이지 번호,
+            "endPage": 끝 페이지 번호,
+            "isPrev": 이전 화살표 유무,
+            "isNext": 다음 화살표 유무,
+            "totalPages": 총 페이지 개수
+        },
+        [   
+            {
+                "no":행 번호,
+                "question_post_id":게시글 ID,
+                "question_main_tag":"메인 태그",
+                "question_title":"제목",
+                "answer_count":댓글 개수,
+                "question_writer_nickname":작성자 닉네임,
+                "date":"날짜", // 주석 작성일 현재시간 기준으로 24시간 이내 HH:mm, 이후 MM-DD
+                "rate":추천수 합
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        {
+            "startPage":1,
+            "endPage":12,
+            "isPrev":false,
+            "isNext":true
+        },
+        [   
+            {
+                "no":6,
+                "question_post_id":12,
+                "question_main_tag":"메인태그",
+                "question_title":"제목6",
+                "answer_count":5,
+                "question_writer_nickname":1,
+                "date":"11-07",
+                "rate":0
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+2) 질문 게시글 검색 결과 목록
+    [ GET ] /api/devQnA/search
+
+요청:
+    쿼리 스트링:
+        - 검색할 항목 & 검색어
+        target: writer, title, tag
+        /?${ target }=${ value }
+
+        - 페이지
+        /?p=${ page }
+
+        예시)
+            /api/devQnA/search/?writer=닉네임123&p=4
+            /api/devQnA/search/?title=node+js+질문
+
+응답: 질문 게시글/추천글 목록과 같다.
+
+3) 질문 게시글 작성
+    [ POST ] /api/devQnA/write
+    로그인 필요
+
+요청:
+    {
+        "title": "질문 제목",
+        "content": "질문 내용",
+        "mainTag": "메인 태그",
+        "tags": [ "메인 태그", "태그1", "태그2", ... ]
+    }
+
+응답:
+    작성 성공
+    [ 200 ] { "questionPostId": 질문 게시글 ID }
+
+4) 질문 게시글 페이지
+    [ GET ] /api/devQnA/:id
+
+응답:
+    존재하지 않는 게시글일 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    요청 성공
+    [ 200 ]
+    [
+        {
+            "question_post_id":게시글 ID,
+            "question_writer":작성자 ID,
+            "question_writer_nickname":작성자 닉네임,
+            "question_title":"질문 제목",
+            "question_content":"질문 내용",
+            "question_main_tag":"메인 태그",
+            "answer_count":답변 개수,
+            "rate_up":추천 수,
+            "rate_down":비추천 수,
+            "date":"작성일", // YYYY-MM-DD HH:mm:ss
+            "recent_update_date":"수정일" // 주석: null일 경우 수정일을 표시하지 않는다. YYYY-MM-DD HH:mm:ss
+        },
+        [
+            {"tag_name":"메인 태그"},
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"}, ... 
+        ],
+        [
+            {
+                "answer_post_id":답변 ID,
+                "answer_writer":작성자 ID,
+                "answer_writer_nickname":"작성자 닉네임",
+                "question_post_id":질문 게시글 ID,
+                "answer_content":"답변 내용",
+                "rate_up":추천 수,
+                "rate_down":비추천 수,
+                "date":"작성일", // YYYY-MM-DD HH:mm:ss
+                "recent_update_date":수정일 // 주석: null일 경우 수정일을 표시하지 않는다. YYYY-MM-DD HH:mm:ss
+            }, { ... }, { ... }, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        {
+            "question_post_id":8,
+            "question_writer":1,
+            "question_writer_nickname":"닉네임1",
+            "question_title":"제목2",
+            "question_content":"내용",
+            "question_main_tag":"메인태그",
+            "answer_count":0,
+            "rate_up":0,
+            "rate_down":0,
+            "date":"2023-11-07 12:41:41",
+            "recent_update_date":null
+        },
+        [
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"},
+            {"tag_name":"태그4"}
+        ],
+        [
+            {
+                "answer_post_id":1,
+                "answer_writer":1,
+                "answer_writer_nickname":"닉네임1",
+                "question_post_id":8,
+                "answer_content":"답변 내용1",
+                "rate_up":0,
+                "rate_down":0,
+                "date":"2023-11-07 13:51:02",
+                "recent_update_date":null
+            },
+            {
+                "answer_post_id":2,
+                "answer_writer":1,
+                "answer_writer_nickname":"닉네임1",
+                "question_post_id":8,
+                "answer_content":"답변 내용2",
+                "rate_up":0,
+                "rate_down":0,
+                "date":"2023-11-07 13:51:02",
+                "recent_update_date":null
+            }
+        ]
+    ]
+
+5) 질문 게시글 수정 페이지 데이터 요청
+    [ GET ] /api/devQnA/:id/edit
+    로그인 필요
+
+응답:
+    수정하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    해당 게시글의 작성자가 수정하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    요청 성공
+    [ 200 ]
+    [
+        {
+            "question_title":"질문 제목",
+            "question_content":"질문 내용",
+            "question_main_tag":"메인 태그"
+        },
+        [
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"},
+            {"tag_name":"태그4"}, ...
+        ]
+    ]
+
+예시 응답:
+    [
+        {
+            "question_title":"제목1",
+            "question_content":"내용",
+            "question_main_tag":"메인태그"
+        },
+        [
+            {"tag_name":"태그1"},
+            {"tag_name":"태그2"},
+            {"tag_name":"태그3"},
+            {"tag_name":"태그4"}
+        ]
+    ]
+
+6) 질문 게시글 수정
+    [ PUT ] /api/devQnA/:id/edit
+    로그인 필요
+
+요청:
+    {
+        "title":"수정한 제목"
+        "content":"수정한 내용"
+        "mainTag":"메인 태그"
+        "tags": [ "메인 태그", "태그1", "태그2", ... ]
+    }
+
+응답:
+    수정하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    해당 게시글의 작성자가 수정하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    수정 성공
+    [ 200 ]
+
+7) 질문 게시글 삭제
+    [ DELETE ] /api/devQnA/:id/delete
+    로그인 필요
+
+응답:
+    삭제하려는 게시글이 존재하지 않을 때
+    오류 코드와 메시지 출력
+    [ 404 ] { "message": "존재하지 않는 글입니다." }
+
+    해당 게시글의 작성자가 삭제하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    삭제 성공
+    [ 200 ]
+
+8) 답변 작성
+    [ POST ] /api/devQnA/:id/writeAnswer
+    로그인 필요
+
+요청:
+    {
+        "content":"답변 내용"
+    }
+
+응답:
+    답변 내용이 누락되었거나 빈 문자열일 때
+    alert 메시지 표시
+    [ 400 ] { "message":"답변이 입력되지 않았습니다." }
+    
+    작성 성공
+    [ 200 ]
+
+9) 답변 수정
+    [ PUT ] /api/devQnA/:id/:answerId/edit
+    로그인 필요
+
+요청:
+    {
+        "content":"수정한 답변 내용"
+    }
+응답:
+    해당 답변의 작성자가 수정하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    답변 내용이 누락되었거나 빈 문자열일 때
+    alert 메시지 표시
+    [ 400 ] { "message":"답변이 입력되지 않았습니다." }
+
+    수정 성공
+    [ 200 ]
+
+10) 답변 삭제
+    [ DELETE ] /api/devQnA/:id/:answerId/delete
+    로그인 필요
+
+응답:
+    해당 답변의 작성자가 삭제하려는 유저와 다를 때
+    오류 코드와 메시지 출력
+    [ 403 ] { "message": "접근 권한이 없습니다." }
+
+    삭제 성공
+    [ 200 ]

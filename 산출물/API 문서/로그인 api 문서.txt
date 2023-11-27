@@ -1,0 +1,156 @@
+로그인/회원가입 API문서 - 방어진 작성
+
+공통 에러 처리
+
+로그인 필요
+- 로그인 상태가 아닐 때
+alert 메시지 표시 후 로그인 페이지로 이동
+[ 403 ] { "message":"로그인이 필요합니다." }
+
+비로그인 필요
+- 로그인 상태일 때
+[ 403 ] { "message":"로그인 상태입니다." }
+
+서버 오류
+서버 내부 오류는 클라이언트에 그 내용을 노출시키지 않는다.
+500, 서버 오류!만 표시함
+오류 코드와 메시지 출력
+[ 500 ] { "message":"서버 오류!" }
+
+
+
+###### 로그인/회원가입 /api/user ######
+
+1) 회원가입
+	[ POST ] /api/user/signUp
+	비로그인 필요
+
+요청:
+	{
+		"email": "이메일",
+		"nickname": "닉네임",
+		"password": "비밀번호"
+	}
+
+응답:
+    해당 이메일로 가입한 유저가 있다면
+	alert 메시지 표시
+    [ 403 ] { "message": "해당 이메일로 가입한 유저가 존재합니다." }
+
+    회원가입 성공
+    [ 200 ]
+	
+1.1) 이메일 중복 확인
+	[ GET ] /api/user/signUp/checkEmail/:email
+	비로그인 필요
+
+요청:
+	/:email 값을 인코딩 해야함
+
+응답:
+	이메일이 중복이면
+	{ "isEmailDuplicate": true }
+
+	이메일이 중복이 아니면
+	{ "isEmailDuplicate": false }
+	
+1.2) 닉네임 중복 확인
+	[ GET ] /api/user/signUp/checkNickname/:nickname
+	비로그인 필요
+
+요청:
+	/:nickname 값을 인코딩 해야함
+
+응답:
+	닉네임이 중복이면
+	{ "isNicknameDuplicate": true }
+
+	닉네임이 중복이 아니면
+	{ "isNicknameDuplicate": false }
+
+2) 로그인
+	[ POST ] /api/user/signIn
+	비로그인 필요
+
+요청:
+    {
+        "email": "이메일",
+        "password": "비밀번호"
+    }
+
+응답:
+    비밀번호가 일치하지 않으면
+	alert 메시지 표시
+    [ 400 ] { "message": "비밀번호가 일치하지 않습니다." }
+
+    해당 이메일로 가입되지 않은 회원이면
+	alert 메시지 표시
+    [ 400 ] { "message": "가입되지 않은 회원입니다." }
+
+    로그인 성공
+    [ 200 ] {
+                "userId": "아이디",
+                "nickname": "닉네임",
+                "email": "이메일"
+            }
+
+3) 로그아웃
+	[ GET ] /api/user/signOut
+	로그인 필요
+
+응답:
+    로그아웃 성공
+    [ 200 ]
+
+4) 비밀번호 찾기
+	[ PUT ] /api/user/findPassword
+	비로그인 필요
+
+요청:
+	{
+		"email": "이메일"
+	}
+
+응답:
+    해당 이메일로 가입되지 않은 회원이면
+	alert 메시지 표시
+    [ 400 ] { "message": "해당 이메일로 가입한 유저가 없습니다." }
+
+    비밀번호 변경및 메일 전송 완료
+    [ 200 ]
+
+5) 비밀번호 확인
+	[ POST ] /api/user/passwordCheck
+	로그인 필요
+
+요청:
+    {
+		"password": "비밀번호"
+	}
+
+응답:
+    현재 비밀번호가 일치하지 않으면
+	alert 메시지 표시
+    [ 400 ] { "message": "비밀번호가 일치하지 않습니다." }
+
+    비밀번호 확인 
+    [ 200 ]
+
+
+6) 비밀번호 변경
+	[ PUT ] /api/user/changePassword
+	로그인 필요
+
+요청:
+    {
+		"newPassword": "비밀번호",
+		"passwordCheck": "비밀번호"
+	}
+
+응답:
+    새로운 비밀번호가 비밀번호 체크와 일치하지 않으면
+	alert 메시지 표시
+    [ 400 ] { "message": "비밀번호가 일치하지 않습니다." }
+
+    비밀번호 변경완료
+    [ 200 ]
