@@ -55,8 +55,8 @@
 
 ## 기술 스택
 웹 서버 개발(백엔드)
-- [`Node.js`](https://nodejs.org){:target="_blank"}
-- [`Express.js`](https://expressjs.com/){:target="_blank"}
+- [`Node.js`](https://nodejs.org)
+- [`Express.js`](https://expressjs.com/)
 
 웹 화면 개발(프론트엔드)
 - [`Vue.js`](https://vuejs.org/)
